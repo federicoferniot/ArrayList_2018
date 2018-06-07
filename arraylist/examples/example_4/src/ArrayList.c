@@ -70,9 +70,18 @@ ArrayList* al_newArrayList(void)
 int al_add(ArrayList* this, void* pElement)
 {
     int returnAux = -1;
-
+    if(this != NULL && pElement != NULL)
+    {
+        this->pElements[this->size] = pElement;
+        if(!resizeUp(this))
+        {
+            returnAux=0;
+            this->size++;
+        }
+    }
     return returnAux;
 }
+
 
 /** \brief  Delete arrayList
  * \param pList ArrayList* Pointer to arrayList
@@ -302,7 +311,24 @@ int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
 int resizeUp(ArrayList* this)
 {
     int returnAux = -1;
-
+    void** pElementAux;
+    if(this != NULL)
+    {
+        if(this->size == this->reservedSize)
+        {
+            pElementAux = realloc(this->pElements, sizeof(void*)*(this->reservedSize+AL_INCREMENT));
+            if(pElementAux != NULL)
+            {
+                returnAux=0;
+                this->pElements = pElementAux;
+                this->reservedSize+=AL_INCREMENT;
+            }
+        }
+        else
+        {
+            returnAux=0;
+        }
+    }
     return returnAux;
 
 }
