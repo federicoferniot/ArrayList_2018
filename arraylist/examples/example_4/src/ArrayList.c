@@ -91,7 +91,13 @@ int al_add(ArrayList* this, void* pElement)
 int al_deleteArrayList(ArrayList* this)
 {
     int returnAux = -1;
-
+    int i;
+    if(this != NULL)
+    {
+        free(this->pElements);
+        free(this);
+        returnAux=0;
+    }
     return returnAux;
 }
 
