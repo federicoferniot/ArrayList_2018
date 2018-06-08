@@ -236,8 +236,24 @@ int al_clear(ArrayList* this)
  */
 ArrayList* al_clone(ArrayList* this)
 {
+    int i;
     ArrayList* returnAux = NULL;
-
+    if(this != NULL)
+    {
+        returnAux = al_newArrayList();
+        if(returnAux!=NULL)
+        {
+            for(i=0;i<this->size;i++)
+            {
+                if(al_add(returnAux, al_get(this, i)))
+                {
+                    al_deleteArrayList(returnAux);
+                    returnAux=NULL;
+                    break;
+                }
+            }
+        }
+    }
     return returnAux;
 }
 
@@ -254,6 +270,17 @@ ArrayList* al_clone(ArrayList* this)
 int al_push(ArrayList* this, int index, void* pElement)
 {
     int returnAux = -1;
+    if(this != NULL && pElement != NULL && index>=0 && index<=this->size)
+    {
+        this->size++;
+        if(!expand(this, index))
+        {
+            this->pElements[index]=pElement;
+            returnAux=0;
+        }
+        else
+            this->size--;
+    }
 
     return returnAux;
 }
@@ -387,7 +414,20 @@ int resizeUp(ArrayList* this)
  */
 int expand(ArrayList* this,int index)
 {
+    int i;
     int returnAux = -1;
+    if(this != NULL && index>=0 && index<this->size)
+    {
+        if(!resizeUp(this))
+        {
+            for(i=(this->size-1);i<this->size;i++)
+            {
+                this->pElements[i]=this->pElements[i-1];
+            }
+            printf("\nENTRO\n");
+            returnAux=0;
+        }
+    }
 
     return returnAux;
 }
