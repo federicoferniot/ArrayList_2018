@@ -73,6 +73,7 @@ void startTesting(int testGroup)
             utest_init();
             utest_startTest(thirdTestCase01,thirdTestSetup,">Case[Return of deleteArrayList with NULL pointer to array]");
             utest_startTest(thirdTestCase02,thirdTestSetup,">Case[Return of deleteArrayList with correct pointer to array]");
+            utest_startTest(thirdTestCase03,thirdTestSetup,">Case[Return of deleteArrayList with correct pointer to array with element]");
             utest_printStatistics("al_deleteArrayList()");
             // End Group 03
             break;

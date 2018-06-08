@@ -55,9 +55,26 @@ void thirdTestCase02(void)
     list = al_newArrayList();
 
     r = al_deleteArrayList(list);
+    utest_assertEqualsIntMsg(r,1,"Error in return value <deleteArrayList> if array pointer is valid, the correct value to return is: (1)");
+
+    if(r == -1)
+        free(list);
+
+}
+
+void thirdTestCase03(void)
+{
+
+    int r;
+    ArrayList* list;
+    list = al_newArrayList();
+    void* element = malloc(sizeof(void));
+    al_add(list, element);
+    r = al_deleteArrayList(list);
     utest_assertEqualsIntMsg(r,0,"Error in return value <deleteArrayList> if array pointer is valid, the correct value to return is: (0)");
 
-    if(r != 0)
+    free(element);
+    if(r == -1)
         free(list);
 
 }
